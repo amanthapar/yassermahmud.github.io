@@ -3,6 +3,9 @@ $( document ).ready(function() {
 $(function() {$("#tabs").tabs()}) // Add tabs in
 $(function() {$("#datepicker" ).datepicker({dateFormat: "dd/mm/yy",})}) //Add the calender
 $(function() {$("#filteredDate" ).datepicker({dateFormat: "dd/mm/yy",onSelect:filterDate,})}) //filters dates using the calendar
+CKEDITOR.replace( 'textInput',{startupFocus : true,})
+CKEDITOR.config.removePlugins = 'elementspath'
+
 
 removeP=function(event){
 	if(event.shiftKey===true)
@@ -19,7 +22,8 @@ deleteP=function(event){
 }
 var i = 0; //id's for the paragraphs to track them
 takeTextAreaInput=function(){
-	taskText=$('#taskText').val()
+	//taskText=$('#taskText').val()
+	taskText=CKEDITOR.instances.taskText.getData()
 	toDoList=$('#toDoList')
 	filteredList=$('#filteredList')
 	date=$('#datepicker').val()		
@@ -46,8 +50,9 @@ takeSavedInput=function(contentText){
 	j++
 }
 clearInput=function(){
-	$('#taskText').val('') //puts blank for the text area
-	$('#taskText').focus() //puts the blinking cursor on the text area
+	// $('#taskText').val('') //puts blank for the text area
+	//$('#taskText').focus() //puts the blinking cursor on the text area
+	CKEDITOR.instances.taskText.setData('',{callback: function() {this.focus();}})	
 }
 savePage=function(){
 	var allPara=$("div#toDoList blockquote")
