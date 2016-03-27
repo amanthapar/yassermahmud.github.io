@@ -1,15 +1,13 @@
 $( document ).ready(function() {
 
 $(function() {$("#tabs").tabs()}) // Add tabs in
-$(function() {$("#datepicker" ).datepicker()}) //Add the calender
-$(function() {$("#filteredDate" ).datepicker()}) //filters dates using the calendar
+$(function() {$("#datepicker" ).datepicker({dateFormat: "dd/mm/yy",})}) //Add the calender
+$(function() {$("#filteredDate" ).datepicker({dateFormat: "dd/mm/yy",onSelect:filterDate,})}) //filters dates using the calendar
 
 removeP=function(event){
-	//console.log(event)
 	if(event.shiftKey===true)
 	{
 		var targetID=event.target.id
-//		str=event.target.textContent
 		$(event.target).remove()
 		$("div#filteredList blockquote#"+targetID).remove()
 	}
@@ -86,9 +84,9 @@ loadPage=function(){
 	})
 }
 filterDate=function(){
+
 	initializeFilter()
 	var date = $('#filteredDate').val()	
-	console.log(date)
 	var allPara=$("div#filteredList blockquote")
 	_.each(allPara,function(item){
 		para=$(item).text()
