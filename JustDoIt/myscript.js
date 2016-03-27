@@ -5,14 +5,19 @@ $(function() {$("#datepicker" ).datepicker()}) //Add the calender
 $(function() {$("#filteredDate" ).datepicker()}) //filters dates using the calendar
 
 removeP=function(event){
+	//console.log(event)
 	if(event.shiftKey===true)
 	{
-		console.log(event.target.id)
 		var targetID=event.target.id
-		str=event.target.textContent
+//		str=event.target.textContent
 		$(event.target).remove()
 		$("div#filteredList blockquote#"+targetID).remove()
 	}
+}
+deleteP=function(event){
+	var targetID=event.target.offsetParent.id
+	$(event.target.offsetParent).remove()
+	$("div#filteredList blockquote#"+targetID).remove()
 }
 var i = 0; //id's for the paragraphs to track them
 takeTextAreaInput=function(){
@@ -24,9 +29,9 @@ takeTextAreaInput=function(){
 		alert("Nothing was entered")
 	}
 	else{
-		toDoList.append('<blockquote id ="'+i+'" style="overflow:auto" contenteditable="true" class="task">'+ '<span class="spanDate '+i+'">'+date + '<br></span>'+taskText+ '</blockquote>')
+		toDoList.append('<blockquote id ="'+i+'" style="overflow:auto" contenteditable="true" class="task">'+ '<span class="spanDate '+i+'">'+date + '<br></span>'+taskText+ '<span style="float:right"><input class="ui-button" value = "Delete" type="button" onclick="deleteP(event)"></span></blockquote>')
 		$(function() {$(".task").draggable({grid:[20,20],axis:"y"}).resizable({axis:"y",handles:"n,s"}).click(removeP)})
-		filteredList.append('<blockquote id ="'+i+'" style="overflow:auto" contenteditable="true" class="task">'+ '<span class="spanDate '+i+'">'+date + '<br></span>'+taskText+ '</blockquote>')
+		filteredList.append('<blockquote id ="'+i+'" style="overflow:auto" contenteditable="true" class="task">'+ '<span class="spanDate '+i+'">'+date + '<br></span>'+taskText+ '<span style="float:right"><input class="ui-button" value = "Delete" type="button" onclick="deleteP(event)"></span></blockquote>')
 		$(function() {$(".task").draggable({grid:[20,20],axis:"y"}).resizable({axis:"y",handles:"n,s"}).click(removeP)})
 		clearInput()
 		i++;
